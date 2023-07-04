@@ -1,0 +1,24 @@
+{
+  "name": "sociabyte",
+  "version": "1.0.0",
+  "description": "social media web app",
+  "main": "index.js",
+  "author": "nikhil ranjan kumar",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cloudinary": "^1.37.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.3",
+    "nodemon": "^2.0.22",
+    "uuidv4": "^6.2.13"
+  }
+}
