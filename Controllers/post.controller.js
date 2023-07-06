@@ -163,8 +163,14 @@ const editPost = async (req, res) => {
 const likePost = async (req, res) => {
   try {
     const { id } = req.userData;
+
     const { postId } = req.params;
-    // const { type } = req.body;
+
+    if (!postId)
+      return res.status(400).json({
+        message: "bad request",
+        success: false,
+      });
 
     const itemToUpdate = await postSchema.findOneAndUpdate(
       { _id: postId },
@@ -175,9 +181,47 @@ const likePost = async (req, res) => {
       },
       { new: true }
     );
-    console.log(
-      "🚀 ~ file: post.controller.js:178 ~ likePost ~ itemToUpdate:",
-      itemToUpdate
+
+    if (!itemToUpdate) {
+      return res.status(404).json({
+        message: "Post not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Post Liked Successfully",
+      success: true,
+      postData: itemToUpdate,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message:
+        "Something went wrong, post is Not Liked ,Please try again later",
+      success: false,
+    });
+  }
+};
+const disLikePost = async (req, res) => {
+  try {
+    const { id } = req.userData;
+
+    const { postId } = req.params;
+
+    if (!postId)
+      return res.status(400).json({
+        message: "bad request",
+        success: false,
+      });
+
+    const itemToUpdate = await postSchema.findOneAndUpdate(
+      { _id: postId },
+      {
+        $pull: {
+          likes: id,
+        },
+      },
+      { new: true }
     );
 
     if (!itemToUpdate) {
@@ -406,6 +450,7 @@ export {
   deletePost,
   editPost,
   likePost,
+  disLikePost,
   createComment,
   deleteComment,
   likeComment,
