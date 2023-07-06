@@ -64,7 +64,7 @@ const getAllPost = async (req, res) => {
   try {
     const findAllPost = await postSchema
       .find()
-      .populate("userId")
+      .populate("userId likes")
       .sort({ updatedAt: -1 });
 
     return res.status(200).json({
@@ -162,20 +162,22 @@ const editPost = async (req, res) => {
 
 const likePost = async (req, res) => {
   try {
+    const { id } = req.userData;
     const { postId } = req.params;
-    const { type } = req.body;
+    // const { type } = req.body;
 
     const itemToUpdate = await postSchema.findOneAndUpdate(
       { _id: postId },
       {
-        $set: {
-          likedByUsers: type === "like" ? true : false,
-        },
-        $inc: {
-          likes: type === "like" ? 1 : -1,
+        $push: {
+          likes: id,
         },
       },
       { new: true }
+    );
+    console.log(
+      "🚀 ~ file: post.controller.js:178 ~ likePost ~ itemToUpdate:",
+      itemToUpdate
     );
 
     if (!itemToUpdate) {
