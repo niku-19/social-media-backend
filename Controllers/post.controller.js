@@ -64,7 +64,7 @@ const getAllPost = async (req, res) => {
   try {
     const findAllPost = await postSchema
       .find()
-      .populate("userId likes")
+      .populate("userId")
       .sort({ updatedAt: -1 });
 
     return res.status(200).json({
