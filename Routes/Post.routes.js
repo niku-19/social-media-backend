@@ -4,6 +4,7 @@ import {
   createPost,
   deleteComment,
   deletePost,
+  disLikePost,
   editPost,
   getAllPost,
   getPostByUser,
@@ -28,6 +29,7 @@ Routers.patch("/createcommnet/:postId", checkAuth, createComment);
 Routers.patch("/deletecommnet/:postId", checkAuth, deleteComment);
 Routers.patch("/editpost/:postId", checkAuth, editPost);
 Routers.patch("/like/:postId", checkAuth, likePost);
+Routers.patch("/dislike/:postId", checkAuth, disLikePost);
 Routers.patch("/likecomment/:postId", checkAuth, likeComment);
 Routers.delete("/deletepost/:postId", checkAuth, deletePost);
 Routers.delete("/deletebookmarkpost/:postId", checkAuth, deleteFormBookmark);
