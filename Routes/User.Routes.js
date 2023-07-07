@@ -8,6 +8,7 @@ import {
   friends,
   userToFollow,
   unFolloweUser,
+  deleteAccount,
 } from "../Controllers/user.controller.js";
 import checkAuth from "../middleware/check-auth.js";
 
@@ -21,5 +22,6 @@ Routers.patch("/editprofile", checkAuth, editProfile);
 Routers.post("/followuser/:userId", checkAuth, followUser);
 Routers.post("/unfolloweUser/:userId", checkAuth, unFolloweUser);
 Routers.get("/userToFollow", checkAuth, userToFollow);
+Routers.delete("/delet-account", checkAuth, deleteAccount);
 
 export default Routers;

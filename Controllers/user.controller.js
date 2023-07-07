@@ -28,7 +28,8 @@ export const profile = async (req, res) => {
 export const editProfile = async (req, res) => {
   try {
     const { id } = req.userData;
-    const { firstName, lastName, avatar, bio, cover } = req.body;
+    const { firstName, lastName, avatar, bio, cover, password, email } =
+      req.body;
 
     const userData = await userSchema.findOneAndUpdate(
       { _id: id },
@@ -39,6 +40,8 @@ export const editProfile = async (req, res) => {
           bio,
           avatar,
           cover,
+          password,
+          email,
         },
       }
     );
@@ -47,29 +50,6 @@ export const editProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // var imageUrl;
-    // var coverUrl;
-
-    // if (avatar) {
-    //   const buffer = Buffer.from(
-    //     avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-    //     "base64"
-    //   );
-    //   const imagePath = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    //   imageUrl = await CloudinaryServices.uploadImage(buffer, imagePath);
-    // }
-
-    // if (cover) {
-    //   const buffer = Buffer.from(
-    //     cover.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-    //     "base64"
-    //   );
-    //   const imagePath = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    //   coverUrl = await CloudinaryServices.uploadImage(buffer, imagePath);
-    // }
-
-    //save
-
     const user = {
       id,
       firstName,
@@ -77,6 +57,8 @@ export const editProfile = async (req, res) => {
       bio,
       avatar,
       cover,
+      password,
+      email,
     };
 
     return res.status(200).json({
@@ -296,6 +278,32 @@ export const userToFollow = async (req, res) => {
       success: true,
       message: "User fetched successfully",
       data: users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something went wrong ! please try again after someTime",
+      success: false,
+      data: null,
+    });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const { id } = req.userData;
+
+    const user = await userSchema.findById({ _id: id });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await userSchema.findByIdAndDelete({ _id: id });
+
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+      data: null,
     });
   } catch (err) {
     return res.status(500).json({
