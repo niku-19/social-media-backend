@@ -17,7 +17,9 @@ const addPostToBookmark = async (req, res) => {
     const bookmarkedPost = await postSchema.findByIdAndUpdate(
       postId,
       {
-        $set: { isBookmarked: true },
+        $push: {
+          bookMarkedBy: id,
+        },
       },
       { new: true }
     );
@@ -155,7 +157,9 @@ const deleteFormBookmark = async (req, res) => {
       const bookmarkedPost = await postSchema.findByIdAndUpdate(
         postId,
         {
-          $set: { isBookmarked: false },
+          $pull: {
+            bookMarkedBy: id,
+          },
         },
         { new: true }
       );

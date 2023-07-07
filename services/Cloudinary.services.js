@@ -1,8 +1,7 @@
 import cloudinary from "cloudinary";
 
 class CloudinaryServices {
-  async uploadImage (image, path) {
-
+  async uploadImage(image, path) {
     //cloudinary configuration
 
     cloudinary.config({
@@ -10,7 +9,6 @@ class CloudinaryServices {
       api_key: "561467826254498",
       api_secret: "nFHwcmWDmRHhKx80vJw6CPv42Gc",
     });
-
 
     //upload image to cloudinary
     const result = await new Promise((resolve, reject) => {

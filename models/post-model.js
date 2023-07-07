@@ -28,9 +28,10 @@ const postSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    isBookmarked: {
-      type: Boolean,
-      default: false,
+    bookMarkedBy: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
     },
   },
   {
