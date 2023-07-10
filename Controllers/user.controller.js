@@ -51,14 +51,14 @@ export const editProfile = async (req, res) => {
     }
 
     const user = {
-      id,
-      firstName,
-      lastName,
-      bio,
-      avatar,
-      cover,
-      password,
-      email,
+      _id: id,
+      firstName: firstName,
+      lastName: lastName,
+      bio: bio,
+      avatar: avatar,
+      cover: cover,
+      password: password,
+      email: email,
     };
 
     return res.status(200).json({
